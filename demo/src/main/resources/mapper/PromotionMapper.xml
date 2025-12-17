@@ -3,16 +3,26 @@
 <mapper namespace="com.example.promotion.mapper.PromotionMapper">
 
     <select id="selectActivePromotionProducts" resultType="com.example.promotion.model.PromotionProduct">
-        SELECT
-            A.PROD_CD,
-            A.PROD_NM,
-            B.PROMO_PRICE,
-            B.START_DT,
-            B.END_DT
-        FROM TB_PRODUCT A
-        JOIN TB_PROMOTION B ON A.PROD_CD = B.PROD_CD
-        WHERE A.USE_YN = 'Y'
-          AND TO_CHAR(SYSDATE, 'YYYYMMDD') BETWEEN B.START_DT AND B.END_DT
-    </select>
+		SELECT p.prod_cd
+		    , p.prod_nm
+		    , pm.promo_price
+		    , pm.start_dt
+		    , pm.end_dt
+		FROM tb_product p, tb_promotion pm
+		WHERE p.prod_cd = pm.prod_cd
+		  AND p.use_yn = 'Y'
+		<if test="promoName != null and promoName != ''">
+		  AND pm.promo_name LIKE '%' || #{promoName} || '%'
+		</if>
+		<if test="prodNm != null and prodNm != ''">
+		  AND p.prod_nm LIKE '%' || #{prodNm} || '%'
+		</if>
+		<if test="startDt != null and startDt != ''">
+		  AND pm.start_dt <= TO_DATE(#{startDt})
+		</if>
+		<if test="endDt != null and endDt != ''">
+		  AND pm.end_dt  >= TO_DATE(#{endDt})
+		</if>
+		    </select>
 
 </mapper>

@@ -8,5 +8,5 @@ import model.PromotionProduct;
 
 @Mapper
 public interface PromotionMapper {
-	List<PromotionProduct> selectActivePromotionProducts();
+	List<PromotionProduct> selectActivePromotionProducts(String promoName, String prodNm, String startDt, String endDt);
 }

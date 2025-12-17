@@ -16,7 +16,7 @@ public class PromotionService {
         this.promotionMapper = promotionMapper;
     }
 
-    public List<PromotionProduct> getActivePromotionProducts() {
-        return promotionMapper.selectActivePromotionProducts();
+    public List<PromotionProduct> getActivePromotionProducts(String promoName, String prodNm, String startDt, String endDt) {
+        return promotionMapper.selectActivePromotionProducts(promoName,	prodNm, startDt, endDt);
     }
 }
