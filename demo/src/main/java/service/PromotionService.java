@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import mapper.PromotionMapper;
 import model.PromotionProduct;
+import model.SearchPromotionVO;
 
 @Service
 public class PromotionService {
@@ -16,7 +17,7 @@ public class PromotionService {
         this.promotionMapper = promotionMapper;
     }
 
-    public List<PromotionProduct> getActivePromotionProducts(String promoName, String prodNm, String startDt, String endDt) {
-        return promotionMapper.selectActivePromotionProducts(promoName,	prodNm, startDt, endDt);
+    public List<PromotionProduct> getActivePromotionProducts(SearchPromotionVO searchPromotionVO) {
+        return promotionMapper.selectActivePromotionProducts(searchPromotionVO);
     }
 }
