@@ -3,6 +3,7 @@ package controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import model.PromotionProduct;
 import service.PromotionService;
@@ -19,8 +20,18 @@ public class PromotionsController {
     private PromotionService promotionService;
 	
 	@GetMapping("/v1/promotions")
-	public ResponseEntity<List<PromotionProduct>> promotions() {
-		List<PromotionProduct> promotionProducts = new ArrayList<>();
+	public ResponseEntity<List<PromotionProduct>> promotions(
+			@RequestParam("promoName") String promoName,
+			@RequestParam("prodNm") String prodNm,
+			@RequestParam("startDt") String startDt,
+			@RequestParam("endDt") String endDt
+			) {
+		List<PromotionProduct> promotionProducts = promotionService.getActivePromotionProducts(
+				promoName,
+				prodNm,
+				startDt,
+				endDt
+				);
         if (promotionProducts.isEmpty()) {
             return ResponseEntity.noContent().build(); // 프로모션 상품이 없을 경우 204 리턴
         }
